@@ -3,24 +3,51 @@
 <head th:replace="layout :: header"></head>
 <body>
 <nav th:replace="layout :: navbar"></nav>
-<div class="container">
-    <form action="/projects/save" th:object="${project}" method="POST">
-        <input type="text" placeholder="Project Name" th:field="${project.name}" />
-        <select th:field="${project.stage}" >
-            <option value="NOTSTARTED">NOT STARTED</option>
-            <option value="INPROGRESS">IN PROGRESS</option>
-            <option value="COMPLETED">COMPLETED</option>
-        </select>
-        <textarea
-                th:field="${project.description}"
-                type="text"
-                placeholder="Enter Project Description"
-        ></textarea>
-        <select th:field="*{employees}" multiple="multiple">
-            <option  th:each="emp: ${employees}" th:value="${emp.employeeId}" th:text="${emp.firstName}">NOT STARTED</option>
 
-        </select>
-        <button type="submit">Create Project</button>
+<div class="container my-3">
+    <h3>New Project</h3>
+    <hr />
+    <form action="/projects/save" method="POST" th:object="${project}">
+        <div class="form-group row">
+            <input type="hidden"
+                   th:field="${project.projectId}" />
+            <span class="mr-3">Project Name </span>
+            <input type="text" placeholder="Project Name" th:field="${project.name}" class="mr-5"/>
+            <span class="mx-3">Status </span>
+            <select th:field="${project.stage}">
+                <option th:value="NOTSTARTED">NOT STARTED</option>
+                <option th:value="INPROGRESS">IN PROGRESS</option>
+                <option th:value="COMPLETED">COMPLETED</option>
+            </select>
+        </div>
+        <div class="form-group row my-3">
+            <span class="mr-3">Description </span>
+            <textarea
+                    rows="3"
+                    cols="50"
+                    type="text"
+                    placeholder="Enter Project Description"
+                    th:field="${project.description}"
+            ></textarea>
+        </div>
+        <div class="form-group row my-3">
+            <span class="mr-3">Attendees </span>
+            <select class="form-select" th:field="*{employees}" multiple="multiple">
+                <option
+                        th:each="employee : ${employees}"
+                        th:value="${employee.employeeId}"
+                        th:text="${employee.firstName}"
+                ></option>
+            </select>
+        </div>
+
+        <div class="form-group row my-5">
+            <button type="submit" class="btn btn-success">Create Project</button>
+        </div>
+
+
+
+
     </form>
 </div>
 

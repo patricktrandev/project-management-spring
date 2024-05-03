@@ -4,7 +4,7 @@
 
 <nav th:replace="layout :: navbar"></nav>
 
-<div class="container">
+<div class="container my-3">
     <a type="button" class="btn btn-primary" th:href="@{/projects/new}">New Project</a>
     <hr/>
     <table class="table table-bordered table-striped">
@@ -13,12 +13,18 @@
 
             <th scope="col">Project Name</th>
             <th scope="col">Stage</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="aProject: ${projects}">
             <td th:text="${aProject.name}" />
             <td th:text="${aProject.stage}"/>
+            <td th:text="${aProject.description}"/>
+            <td>
+                <a th:href="@{/projects/search(id=${aProject.projectId})}" class="btn btn-primary" type="submit"><i class="fa fa-users"></i> </a>
+            </td>
         </tr>
 
         </tbody>

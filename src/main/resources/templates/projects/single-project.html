@@ -5,11 +5,14 @@
 <nav th:replace="layout :: navbar"></nav>
 
 <div class="container my-3">
-    <a type="button" class="btn btn-primary" th:href="@{/employees/new}">New Employee</a>
+    <h4>Project name:  <span th:text="${projectName}"></span></h4>
+    <p>Status:  <span th:text="${projectStage}"></span></p>
+
     <hr/>
     <table class="table table-bordered table-striped">
-        <thead class="table-warning">
+        <thead class="table-primary">
         <tr>
+
 
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
@@ -17,16 +20,15 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="aEmployee: ${employees}">
+        <tr th:each="aEmployee: ${employeeByProjects}">
             <td th:text="${aEmployee.firstName}" />
-            <td th:text="${aEmployee.lastName}" />
+            <td th:text="${aEmployee.lastName}"/>
             <td th:text="${aEmployee.email}"/>
         </tr>
 
         </tbody>
     </table>
 </div>
-
 
 
 <!--JS-->

@@ -1,6 +1,7 @@
 package com.blackcoffee.pma.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,8 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "project")
+    @ManyToMany(cascade ={ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "employee_id"))
     private List<Employee> employees;
 
     public Project(String name, String stage, String description) {
@@ -24,6 +26,14 @@ public class Project {
         this.stage = stage;
         this.description = description;
     }
+
+    public Project(Long projectId, String name, String stage, String description) {
+        this.projectId = projectId;
+        this.name = name;
+        this.stage = stage;
+        this.description = description;
+    }
+
     public Project(){}
 
     public List<Employee> getEmployees() {
@@ -73,5 +83,12 @@ public class Project {
                 ", stage='" + stage + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public void addEmployee(Employee emp) {
+        if(this.employees==null) {
+            this.employees= new ArrayList<>();
+        }
+        employees.add(emp);
     }
 }

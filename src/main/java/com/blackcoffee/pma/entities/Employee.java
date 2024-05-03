@@ -3,6 +3,8 @@ package com.blackcoffee.pma.entities;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -14,9 +16,9 @@ public class Employee {
     private String lastName;
     private String email;
 
-    @ManyToOne(cascade ={ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinColumn(name="project_id")
-    private Project project;
+    @ManyToMany(cascade ={ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<Project> projectList;
 
     public Employee(String firstName, String lastName, String email) {
         this.firstName = firstName;
@@ -24,14 +26,21 @@ public class Employee {
         this.email = email;
     }
 
-    public Employee(){}
-
-    public Project getProject() {
-        return project;
+    public Employee(Long employeeId, String firstName, String lastName, String email) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public Employee(){}
+
+    public List<Project> getProjectList() {
+        return projectList;
+    }
+
+    public void setProjectList(List<Project> projectList) {
+        this.projectList = projectList;
     }
 
     public Long getEmployeeId() {
@@ -64,5 +73,13 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setProjects(Project p) {
+        if(this.projectList==null) {
+            this.projectList= new ArrayList<>();
+        }
+        this.projectList.add(p);
+
     }
 }
