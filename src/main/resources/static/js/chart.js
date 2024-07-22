@@ -32,3 +32,13 @@ for(let i=0 ; i<jsonChart.length; i++ ){
     txt.innerHTML= html;
     return txt.value;
   }
+function validateForm() {
+  let fname = document.forms["newEmployee"]["firstName"].value;
+  let lname = document.forms["newEmployee"]["lastName"].value;
+  let email = document.forms["newEmployee"]["email"].value;
+  if (fname == "" || lname=="" || email=="") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+

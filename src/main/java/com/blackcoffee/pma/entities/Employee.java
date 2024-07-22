@@ -10,11 +10,15 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employee_gen")
+    @SequenceGenerator(name = "employee_gen", sequenceName = "employee_seq",allocationSize = 1,initialValue=1)
     private Long employeeId;
+
     private String firstName;
+
     private String lastName;
     private String email;
+
 
     @ManyToMany(cascade ={ CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "project_employee", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))

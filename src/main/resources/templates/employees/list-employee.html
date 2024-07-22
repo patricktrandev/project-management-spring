@@ -14,13 +14,18 @@
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="aEmployee: ${employees}">
-            <td th:text="${aEmployee.firstName}" />
-            <td th:text="${aEmployee.lastName}" />
+            <td th:text="${aEmployee.firstName}"/>
+            <td th:text="${aEmployee.lastName}"/>
             <td th:text="${aEmployee.email}"/>
+            <td>
+                <a th:href="@{/employees/update(id=${aEmployee.employeeId})}" class="btn btn-warning"><i class="fa fa-edit"></i></a>
+                <a th:href="@{/employees/delete(id=${aEmployee.employeeId})}" class="btn btn-danger" onclick="if (!(confirm('Are you sure to delete this record?'))) return false"><i class="fa fa-trash"></i></a>
+            </td>
         </tr>
 
         </tbody>
@@ -28,8 +33,9 @@
 </div>
 
 
-
 <!--JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

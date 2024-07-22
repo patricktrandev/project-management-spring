@@ -5,6 +5,8 @@ import com.blackcoffee.pma.dao.ProjectRepository;
 import com.blackcoffee.pma.dto.EmployeeByProject;
 import com.blackcoffee.pma.entities.Employee;
 import com.blackcoffee.pma.entities.Project;
+import com.blackcoffee.pma.service.EmployeeService;
+import com.blackcoffee.pma.service.ProjectService;
 import com.blackcoffee.pma.utils.ProjectStages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +23,13 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
     @Autowired
-    ProjectRepository projectRepository;
+    ProjectService projectService;
     @Autowired
-    EmployeeRepository employeeRepository;
+    EmployeeService employeeService;
 
     @GetMapping
     public String displayProjects(Model model){
-        List<Project> projectList= projectRepository.findAll();
+        List<Project> projectList= projectService.findAllProjects();
         model.addAttribute("projects", projectList);
 
 
@@ -36,7 +38,7 @@ public class ProjectController {
     @GetMapping("/new")
     public String displayProjectForm(Model model){
         Project aProject= new Project();
-        Iterable<Employee> employees= employeeRepository.findAll();
+        Iterable<Employee> employees= employeeService.findAllEmployees();
         model.addAttribute("project", aProject);
         model.addAttribute("employees", employees);
         return "projects/new-project";
@@ -45,15 +47,15 @@ public class ProjectController {
     @PostMapping("/save")
     public String createProject(Model model, Project project){
         //save to db
-        projectRepository.save(project);
+        projectService.createNewProject(project);
 
         return "redirect:/projects";
     }
 
     @GetMapping("/search")
-    public String findProjectBYId(@RequestParam(name="id") Long id, Model model){
+    public String findProjectById(@RequestParam(name="id") Long id, Model model){
 
-        List<EmployeeByProject> employeeByProjects= projectRepository.findAllEmployeeByProject(id);
+        List<EmployeeByProject> employeeByProjects= projectService.findEmployeesByProjectId(id);
         String projectName= employeeByProjects.get(0).getProjectName();
         String stageProject= employeeByProjects.get(0).getStage();
         ProjectStages stages= new ProjectStages();

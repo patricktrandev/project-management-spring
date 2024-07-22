@@ -22,7 +22,7 @@ public class ProjectManagementApplication {
 		SpringApplication.run(ProjectManagementApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner runner() {
 		return args -> {
 			Employee emp1 = new Employee("John", "Warton", "	bretb1dswtir@wuuvo.com");
@@ -90,5 +90,5 @@ public class ProjectManagementApplication {
 			projectRepository.save(pro4);
 
 		};
-}
+}*/
 }

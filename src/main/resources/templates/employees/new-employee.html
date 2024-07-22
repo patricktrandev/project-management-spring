@@ -6,34 +6,35 @@
 
 
 <div class="container my-3">
-    <h3>New Employee</h3>
+    <h3>Employee</h3>
     <hr/>
-    <form action="/employees/save" method="POST" th:object="${employee}">
+    <form name="newEmployee"  action="/employees/save" method="POST" th:object="${employee}">
         <div class="form-group row ">
+            <input type="hidden" th:field="${employee.employeeId}"/>
             <div class="col-1">  <span>First Name </span></div>
 
             <div class="col-10">
-                <input type="text" placeholder="First Name" th:field="${employee.firstName}"/>
+                <input type="text"  name="firstName" placeholder="First Name" th:field="${employee.firstName}" required/>
             </div>
 
         </div>
         <div class="form-group row">
             <div class="col-1">  <span >Last Name </span></div>
             <div class="col-10">
-                <input type="text" placeholder="Last Name" th:field="${employee.lastName}"/>
+                <input type="text" name="lastName" placeholder="Last Name" th:field="${employee.lastName}" required/>
             </div>
 
         </div>
         <div class="form-group row">
             <div class="col-1">  <span>Email </span></div>
             <div class="col-10">
-                <input type="email"  placeholder="Email" th:field="${employee.email}"/>
+                <input type="email" name="email"  placeholder="Email" th:field="${employee.email}" required/>
             </div>
 
         </div>
 
         <div class="form-group my-5">
-            <button class="btn btn-success" type="submit">Create Employee </button>
+            <button class="btn btn-success btn-lg" type="submit">Enter Employee </button>
         </div>
 
     </form>

@@ -6,6 +6,8 @@ import com.blackcoffee.pma.dto.ChartData;
 import com.blackcoffee.pma.dto.EmployeeProject;
 import com.blackcoffee.pma.entities.Employee;
 import com.blackcoffee.pma.entities.Project;
+import com.blackcoffee.pma.service.EmployeeService;
+import com.blackcoffee.pma.service.ProjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +25,23 @@ public class HomeController {
     String ver;
 
     @Autowired
-    ProjectRepository projectRepository;
+    ProjectService projectService;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    EmployeeService employeeService;
+
     @GetMapping("/")
     public String displayHome(Model model) throws JsonProcessingException {
         model.addAttribute("verNum", ver);
 
-        List<Project> projectList= projectRepository.findAll();
+        List<Project> projectList = projectService.findAllProjects();
 
-        List<EmployeeProject> employeeList= employeeRepository.assignEmployeeProject();
+        List<EmployeeProject> employeeList = employeeService.assignEmployeeToProject();
 
-        List<ChartData> projectStatusData= projectRepository.projectStatus();
+        List<ChartData> projectStatusData = projectService.findProjectStatus();
 
-        ObjectMapper objectMapper= new ObjectMapper();
-        String projectStatusArr =objectMapper.writeValueAsString(projectStatusData);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String projectStatusArr = objectMapper.writeValueAsString(projectStatusData);
 
         model.addAttribute("projects", projectList);
         model.addAttribute("employees", employeeList);
